@@ -25,7 +25,7 @@ def train_model(model_name: str, data_yaml: str, seed: int, epochs: int = 50, im
     mask_ratio=1,
     warmup_epochs=3,
     warmup_bias_lr=0.00001,
-    lr0=0.01,  
+    lr0=0.01,
     weight_decay=0.0005,
     flipud=0,
     fliplr=0.5,
@@ -37,5 +37,5 @@ def train_model(model_name: str, data_yaml: str, seed: int, epochs: int = 50, im
     save_period=-1,
     deterministic=True     # Recommended for reproducible results
 )
-             
+
     return results
