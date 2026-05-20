@@ -6,3 +6,4 @@ opencv-python==4.13.0.92
 pandas==3.0.1
 matplotlib==3.10.8
 PyYAML==6.0.3
+scikit-learn==1.8.0
