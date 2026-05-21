@@ -6,5 +6,6 @@ nc: 3
 
 
 names:
-  0: Steel
-  1: Copper
+  0: Background
+  1: Steel
+  2: Copper
