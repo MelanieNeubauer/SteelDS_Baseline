@@ -12,7 +12,7 @@ def train_maskrcnn_model(dataset:str, data_yaml: str, seed: int, epochs: int = 2
     
     with open(data_yaml, 'r') as f:
         data_dict = yaml.safe_load(f)
-    num_classes = len(data_dict.get('names', [])) + 1 # +1 for background
+    num_classes = len(data_dict.get('names', [])) # Background is already in names
     
     model = get_model_instance_segmentation(num_classes, imgsz=imgsz).to(device)
     

@@ -60,8 +60,8 @@ class YOLOSegDataset(Dataset):
                 
                 if x_max > x_min and y_max > y_min:
                     boxes.append([x_min, y_min, x_max, y_max])
-                    # Mask R-CNN expects 0 as background class, so shifted by +1
-                    labels.append(cls_idx + 1) 
+                    # YOLO labels now match Mask R-CNN expected indices (0=Bg, 1=Steel, 2=Copper)
+                    labels.append(cls_idx) 
                     
                     mask = np.zeros((h, w), dtype=np.uint8)
                     cv2.fillPoly(mask, [np.int32(coords)], 1)

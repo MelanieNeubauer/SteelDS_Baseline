@@ -109,7 +109,7 @@ def visualize_yolo(model_path, data_yaml_path, img_paths, output_dir, model_name
         
     with open(data_yaml_path, 'r') as f:
         data_dict = yaml.safe_load(f)
-    classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
+    classes = data_dict.get('names', {0: 'Background', 1: 'Steel', 2: 'Copper'})
         
     model = YOLO(model_path)
     
@@ -153,8 +153,8 @@ def visualize_maskrcnn(model_path, data_yaml_path, img_paths, output_dir, model_
     
     with open(data_yaml_path, 'r') as f:
         data_dict = yaml.safe_load(f)
-    classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
-    num_classes = len(classes) + 1
+    classes = data_dict.get('names', {0: 'Background', 1: 'Steel', 2: 'Copper'})
+    num_classes = len(classes)
     
     model = get_model_instance_segmentation(num_classes, imgsz=640).to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
@@ -175,7 +175,7 @@ def visualize_maskrcnn(model_path, data_yaml_path, img_paths, output_dir, model_
         labels = preds['labels'][keep].cpu().numpy()
         scores = preds['scores'][keep].cpu().numpy()
         
-        string_labels = [classes.get(l - 1, 'Unknown') for l in labels]
+        string_labels = [classes.get(l, 'Unknown') for l in labels]
         
         draw_and_save(img_tensor.cpu(), boxes, masks, string_labels, scores if len(scores) > 0 else None, output_dir, model_name, img_name)
 
@@ -184,7 +184,7 @@ def visualize_ground_truth(data_yaml_path, img_paths, output_dir):
     
     with open(data_yaml_path, 'r') as f:
         data_dict = yaml.safe_load(f)
-    classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
+    classes = data_dict.get('names', {0: 'Background', 1: 'Steel', 2: 'Copper'})
     
     for img_path in img_paths:
         img_name = os.path.basename(img_path)
@@ -199,7 +199,7 @@ def visualize_ground_truth(data_yaml_path, img_paths, output_dir):
         labels = target['labels'].numpy()
         masks = target['masks'].numpy()
         
-        string_labels = [classes.get(l - 1, 'Unknown') for l in labels]
+        string_labels = [classes.get(l, 'Unknown') for l in labels]
         
         draw_and_save(img_tensor, boxes, masks, string_labels, None, output_dir, "ground_truth", img_name)
 
