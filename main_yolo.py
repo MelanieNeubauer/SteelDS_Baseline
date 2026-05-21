@@ -32,7 +32,7 @@ def main_yolo(dataset='_a1'):
             print(f"\n>> Starting seed {seed} for {model_name} <<")
             
             # 1. Training
-            train_model(model_name=model_name, data_yaml=data_yaml, seed=seed, epochs=20)
+            train_model(model_name=model_name, data_yaml=data_yaml, seed=seed, epochs=20, project_dir=f"runs{dataset}/segment")
             
             # 2. Evaluation
             run_dir = os.path.abspath(f"runs{dataset}/segment/{model_name}_seed_{seed}_training")

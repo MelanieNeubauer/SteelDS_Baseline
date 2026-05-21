@@ -3,7 +3,7 @@ import torch
 
 from ultralytics import YOLO
 
-def train_model(model_name: str, data_yaml: str, seed: int, epochs: int = 50, imgsz: int = 640):
+def train_model(model_name: str, data_yaml: str, seed: int, epochs: int = 50, imgsz: int = 640, project_dir: str = "runs/segment"):
     """Trains a YOLO segmentation model."""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = YOLO(f"{model_name}")
@@ -12,7 +12,7 @@ def train_model(model_name: str, data_yaml: str, seed: int, epochs: int = 50, im
     epochs=epochs,
     imgsz=imgsz,
     device=device,
-    project=os.path.abspath("runs/segment"),
+    project=os.path.abspath(project_dir),
     name=f"{model_name}_seed_{seed}_training",
     patience=3,            # Early Stopping after 25 epochs without improvement
     workers=4,             # CPU threads (Recommendation: number of physical CPU cores)
