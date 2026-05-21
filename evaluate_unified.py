@@ -62,7 +62,7 @@ def evaluate_yolo_model_unified(model_path: str, data_yaml: str, seed: int):
     
     with open(data_yaml, 'r') as f:
         data_dict = yaml.safe_load(f)
-    classes = data_dict.get('names', {0: 'Background', 1: 'Steel', 2: 'Copper'})
+    classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
     
     dataset_test = YOLOSegDataset(data_yaml, split='test')
     
@@ -145,8 +145,8 @@ def evaluate_maskrcnn_model_unified(model_path: str, data_yaml: str, seed: int, 
     
     with open(data_yaml, 'r') as f:
         data_dict = yaml.safe_load(f)
-    classes = data_dict.get('names', {0: 'Background', 1: 'Steel', 2: 'Copper'})
-    num_classes = len(classes)
+    classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
+    num_classes = len(classes) + 1
     
     model = get_model_instance_segmentation(num_classes, imgsz=imgsz).to(device)
     model.load_state_dict(torch.load(model_path))
@@ -176,7 +176,7 @@ def evaluate_maskrcnn_model_unified(model_path: str, data_yaml: str, seed: int, 
                 
                 formatted_targets.append({
                     "boxes": t["boxes"][valid_idx].to(device),
-                    "labels": t["labels"][valid_idx].to(device),
+                    "labels": (t["labels"][valid_idx].to(device) - 1).clamp(min=0),
                     "masks": masks_bool,
                     "area": area
                 })
@@ -186,7 +186,7 @@ def evaluate_maskrcnn_model_unified(model_path: str, data_yaml: str, seed: int, 
                 formatted_preds.append({
                     "boxes": p["boxes"][valid_idx],
                     "scores": p["scores"][valid_idx],
-                    "labels": p["labels"][valid_idx],
+                    "labels": (p["labels"][valid_idx] - 1).clamp(min=0),
                     "masks": p["masks"][valid_idx].squeeze(1) > 0.5 
                 })
                 
