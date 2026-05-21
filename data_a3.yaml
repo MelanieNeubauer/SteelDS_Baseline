@@ -2,6 +2,7 @@ path: ../SteelDS/a3
 train: train/images
 val: test/images
 test: test/images
+nc: 3
 
 names:
   0: Steel
