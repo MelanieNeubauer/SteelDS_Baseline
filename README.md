@@ -14,7 +14,7 @@ Extract these folders into a directory named `SteelDS` placed alongside this rep
 ## Environment Setup
 
 We recommend using an isolated Python environment (e.g., `venv` or `conda`).
-The code was tested using **Python 3.13.9** on **Ubuntu 24.04.4 LTS** with an **NVIDIA RTX 4090** GPU.
+The code was tested using **Python 3.13.9** on **Ubuntu 24.04.4 LTS** with an **NVIDIA RTX 4090** GPU (24 GB VRAM).
 
 Install the required packages using the following command:
 
