@@ -57,6 +57,8 @@ python main_yolo.py
 ```
 This script loops through specified YOLO model architectures, trains them on the defined datasets, evaluates them using a unified COCO metric, and saves the metrics to CSV files in a generated `results_a1` (or respective) directory.
 
+Training runs with a batch size of 8 by default and requires 24GB VRAM. To adjust the batch size, set `batch=8` in [`train.py`](train.py).
+
 **For Mask R-CNN:**
 ```bash
 python main_maskrcnn.py
