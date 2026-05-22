@@ -49,7 +49,7 @@ SteelDS/
 
 ### 1. Training and Evaluation
 
-We provide two main entry points for running the complete pipeline (training + evaluation) across multiple seeds (1337, 7, 42, 99, 123) and subsets (`a1`, `a2`, `a3`). 
+We provide two main entry points for running the complete pipeline (training + evaluation) across multiple seeds (1337, 7, 42, 99, 123) and subsets (`a1`, `a2`, `a3`). To modify core training hyperparameters—such as batch size, learning rate, or optimizer settings—adjust the configuration directly within the `train.py` source file.
 
 **For YOLO Models (v8, 11, 12, 26):**
 ```bash
