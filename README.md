@@ -6,7 +6,7 @@ The codebase allows you to train instance segmentation models, evaluate them on 
 
 ## Dataset Download
 
-The SteelDS dataset is publicly available on Zenodo. You can download the zipped subset folders (`a1.zip`, `a2.zip`, etc.) from the following DOI link:  
+The SteelDS dataset is publicly available on Zenodo. You can download the zipped subset folders (`a1.zip`, `a2.zip`, etc.) from the following DOI link:
 **[10.5281/zenodo.20271102](https://doi.org/10.5281/zenodo.20271102)**
 
 Extract these folders into a directory named `SteelDS` placed alongside this repository.
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Dataset Structure
 
-The code assumes that the `SteelDS` dataset is located next to this repository folder. Specifically, the data configuration files (`data_a1.yaml`, `data_a2.yaml`, `data_a3.yaml`) point to `../SteelDS/a1`, etc. 
+The code assumes that the `SteelDS` dataset is located next to this repository folder. Specifically, the data configuration files (`data_a1.yaml`, `data_a2.yaml`, `data_a3.yaml`) point to `../SteelDS/a1`, etc.
 
 Please ensure your dataset is structured as follows before running the pipeline:
 
