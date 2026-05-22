@@ -49,7 +49,7 @@ SteelDS/
 
 ### 1. Training and Evaluation
 
-We provide two main entry points for running the complete pipeline (training + evaluation) across multiple seeds (1337, 7, 42, 99, 123) and subsets (`a1`, `a2`, `a3`). To modify core training hyperparameters—such as batch size, learning rate, or optimizer settings—adjust the configuration directly within the `train.py` source file.
+We provide two main entry points for running the complete pipeline (training + evaluation) across multiple seeds (1337, 7, 42, 99, 123) and subsets (`a1`, `a2`, `a3`). To modify core training hyperparameters—such as batch size, learning rate, or optimizer settings—adjust the configuration directly within the `train.py` source file. Training runs with a batch size of 8 by default and requires 24GB VRAM.
 
 **For YOLO Models (v8, 11, 12, 26):**
 ```bash
@@ -57,7 +57,6 @@ python main_yolo.py
 ```
 This script loops through specified YOLO model architectures, trains them on the defined datasets, evaluates them using a unified COCO metric, and saves the metrics to CSV files in a generated `results_a1` (or respective) directory.
 
-Training runs with a batch size of 8 by default and requires 24GB VRAM. To adjust the batch size, set `batch=8` in [`train.py`](train.py).
 
 **For Mask R-CNN:**
 ```bash
