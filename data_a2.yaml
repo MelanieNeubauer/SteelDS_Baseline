@@ -1,6 +1,6 @@
 path: ../SteelDS/a2
 train: train/images
-val: test/images
+val: val/images
 test: test/images
 nc: 3
 
