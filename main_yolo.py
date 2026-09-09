@@ -79,5 +79,7 @@ def main_yolo(dataset='_a1'):
 
 #'''
 if __name__ == "__main__":
-    main_yolo()
+    main_yolo(dataset='_a1')
+    main_yolo(dataset='_a2')
+    main_yolo(dataset='_a3')
     #'''
