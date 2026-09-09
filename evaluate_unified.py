@@ -1,6 +1,5 @@
 import os
 import torch
-import torch.nn.functional as F
 import yaml
 from ultralytics import YOLO
 from torchmetrics.detection.mean_ap import MeanAveragePrecision
