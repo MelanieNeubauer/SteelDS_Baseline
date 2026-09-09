@@ -10,10 +10,10 @@ class YOLOSegDataset(Dataset):
     def __init__(self, data_yaml, split='train'):
         with open(data_yaml, 'r') as f:
             self.data_dict = yaml.safe_load(f)
-            
+
         base_path = self.data_dict.get('path', '')
         split_path = self.data_dict[split]
-        
+
         if isinstance(split_path, str):
             if os.path.isabs(split_path):
                 self.img_dir = split_path
@@ -21,7 +21,7 @@ class YOLOSegDataset(Dataset):
                 self.img_dir = os.path.join(base_path, split_path)
         else:
             self.img_dir = os.path.join(base_path, split_path[0])
-            
+
         self.lbl_dir = self.img_dir.replace('images', 'labels')
         self.img_files = [f for f in os.listdir(self.img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
@@ -42,33 +42,33 @@ class YOLOSegDataset(Dataset):
         boxes = []
         labels = []
         masks = []
-        
+
         if os.path.exists(lbl_path):
             with open(lbl_path, 'r') as f:
                 lines = f.readlines()
             for line in lines:
                 parts = line.strip().split()
                 if len(parts) < 5: continue
-                
+
                 cls_idx = int(parts[0])
                 coords = np.array(parts[1:], dtype=np.float32).reshape(-1, 2)
                 coords[:, 0] *= w
                 coords[:, 1] *= h
-                
+
                 x_min, y_min = coords.min(axis=0)
                 x_max, y_max = coords.max(axis=0)
-                
+
                 if x_max > x_min and y_max > y_min:
                     boxes.append([x_min, y_min, x_max, y_max])
                     # Mask R-CNN expects 0 as background class, so shifted by +1
-                    labels.append(cls_idx + 1) 
-                    
+                    labels.append(cls_idx + 1)
+
                     mask = np.zeros((h, w), dtype=np.uint8)
                     cv2.fillPoly(mask, [np.int32(coords)], 1)
                     masks.append(mask)
 
         img_tensor = TF.to_tensor(img)
-        
+
         target = {}
         if len(boxes) > 0:
             target['boxes'] = torch.as_tensor(boxes, dtype=torch.float32)
@@ -78,10 +78,10 @@ class YOLOSegDataset(Dataset):
             target['boxes'] = torch.zeros((0, 4), dtype=torch.float32)
             target['labels'] = torch.zeros((0,), dtype=torch.int64)
             target['masks'] = torch.zeros((0, h, w), dtype=torch.uint8)
-            
+
         target['image_id'] = torch.tensor([idx])
         return img_tensor, target
-        
+
 def get_model_instance_segmentation(num_classes, imgsz=640):
     import torchvision
     from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
