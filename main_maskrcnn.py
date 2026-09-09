@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 

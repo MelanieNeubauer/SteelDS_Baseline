@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 # Allows PyTorch to manage VRAM more efficiently (must be placed before the first 'import torch'!):
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
