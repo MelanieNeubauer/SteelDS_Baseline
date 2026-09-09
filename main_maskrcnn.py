@@ -1,7 +1,6 @@
 import os
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 
-import shutil
 import pandas as pd
 import gc
 import torch
