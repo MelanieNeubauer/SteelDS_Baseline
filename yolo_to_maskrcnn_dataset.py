@@ -82,14 +82,26 @@ class YOLOSegDataset(Dataset):
         target['image_id'] = torch.tensor([idx])
         return img_tensor, target
 
-def get_model_instance_segmentation(num_classes, imgsz=640):
+def get_model_instance_segmentation(num_classes, imgsz=640, pretrained=False):
     import torchvision
     from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
     from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
-    # Initialize model with default pre-trained weights
-    weights = torchvision.models.detection.MaskRCNN_ResNet50_FPN_Weights.DEFAULT
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(weights=weights, min_size=imgsz, max_size=imgsz, box_score_thresh=0.001)
+    if pretrained:
+        # Initialize model with default pre-trained weights
+        weights = torchvision.models.detection.MaskRCNN_ResNet50_FPN_Weights.DEFAULT
+        weights_backbone = torchvision.models.ResNet50_Weights.IMAGENET1K_V1
+    else:
+        # random initialisation
+        weights = None
+        weights_backbone = None
+
+    model = torchvision.models.detection.maskrcnn_resnet50_fpn(
+        weights=weights,
+        min_size=imgsz, max_size=imgsz,
+        box_score_thresh=0.001,
+        weights_backbone=weights_backbone,
+    )
 
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     # Replace the pre-trained head with a new one

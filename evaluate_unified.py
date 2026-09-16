@@ -147,7 +147,7 @@ def evaluate_maskrcnn_model_unified(model_path: str, data_yaml: str, seed: int, 
     classes = data_dict.get('names', {0: 'Steel', 1: 'Copper'})
     num_classes = len(classes) + 1
 
-    model = get_model_instance_segmentation(num_classes, imgsz=imgsz).to(device)
+    model = get_model_instance_segmentation(num_classes, imgsz=imgsz, pretrained=False).to(device)
     model.load_state_dict(torch.load(model_path))
     model.eval()
 
