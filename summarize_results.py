@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 import os
 import glob
+import argparse
 import pandas as pd
 import numpy as np
 
-def summarize_results(dataset='_a2'):
+def summarize_results(dataset, path):
     # Search deeply through all subfolders of "results" for the final evaluation CSVs
-    csv_files = glob.glob(f"results{dataset}/**/*_evaluation_metrics_5_seeds.csv", recursive=True)
+    csv_files = glob.glob(f"{path}/results{dataset}/**/*_evaluation_metrics_5_seeds.csv", recursive=True)
 
     # If the folder structure is flatter or files have different names, be safe and collect anything that matches
     if not csv_files:
-        csv_files = glob.glob(f"results{dataset}/**/*.csv", recursive=True)
+        csv_files = glob.glob(f"{path}/results{dataset}/**/*.csv", recursive=True)
         # Keep only the aggregated evaluation CSVs
         csv_files = [f for f in csv_files if "evaluation_metrics_5_seeds.csv" in f]
 
@@ -86,11 +87,11 @@ def summarize_results(dataset='_a2'):
         pretty_df[metric] = pretty_strs
 
     # Save the raw data table (useful for other scripts)
-    raw_output = f"results{dataset}/All_Models_Aggregated_Raw.csv"
+    raw_output = f"{path}/results{dataset}/All_Models_Aggregated_Raw.csv"
     export_df.to_csv(raw_output, index=False)
 
     # Save the formatted table (ideal for viewing, papers, or Excel)
-    pretty_output = f"results{dataset}/All_Models_Averaged_Pretty.csv"
+    pretty_output = f"{path}/results{dataset}/All_Models_Averaged_Pretty.csv"
     pretty_df.to_csv(pretty_output, index=False)
 
     print(f"\n--- Summary completed successfully! ---")
@@ -101,4 +102,10 @@ def summarize_results(dataset='_a2'):
     print(pretty_df.to_string(index=False))
 
 if __name__ == "__main__":
-    summarize_results()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", type=str, default=".", help="folder containing the results")
+    args = parser.parse_args()
+
+    summarize_results(dataset='_a1', path=args.path)
+    summarize_results(dataset='_a2', path=args.path)
+    summarize_results(dataset='_a3', path=args.path)
