@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")   # non-interactive backend for offscreen rendering
 import matplotlib.pyplot as plt
 import os
 
