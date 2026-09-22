@@ -50,7 +50,7 @@ def main_yolo(dataset='_a1'):
             pd.DataFrame(all_eval_metrics).to_csv(eval_csv_path, index=False)
 
             # 3. Copy results
-            results_csv = os.path.join(run_dir, "results{dataset}.csv")
+            results_csv = os.path.join(run_dir, "results.csv")
             destination_csv = f"results{dataset}/{model_name}_seed_{seed}_train_results.csv"
 
             if os.path.exists(results_csv):
