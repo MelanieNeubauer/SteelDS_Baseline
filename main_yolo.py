@@ -10,7 +10,6 @@ import torch
 from train import train_model
 from evaluate_unified import evaluate_yolo_model_unified
 from plot import plot_training_results
-from ultralytics import settings
 
 def main_yolo(dataset='_a1'):
 
