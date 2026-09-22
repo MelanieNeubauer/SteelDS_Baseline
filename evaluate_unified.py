@@ -89,7 +89,7 @@ def evaluate_yolo_model_unified(model_path: str, data_yaml: str, seed: int):
 
                 formatted_targets.append({
                     "boxes": t["boxes"][valid_idx].to(device),
-                    "labels": t["labels"][valid_idx].to(device),
+                    "labels": (t["labels"][valid_idx].to(device) - 1).clamp(min=0),
                     "masks": masks_bool,
                     "area": area
                 })
