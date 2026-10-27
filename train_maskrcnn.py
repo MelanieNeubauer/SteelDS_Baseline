@@ -8,6 +8,7 @@ def collate_fn(batch):
 
 def train_maskrcnn_model(dataset:str, data_yaml: str, seed: int, epochs: int = 20, imgsz: int = 640, batch_size: int = 8):
     torch.manual_seed(seed)
+    torch.use_deterministic_algorithms(True)
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
     with open(data_yaml, 'r') as f:
