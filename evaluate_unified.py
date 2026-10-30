@@ -56,6 +56,10 @@ def compute_shared_metrics(metric_box, metric_seg, metric_box_50, metric_seg_50,
     return out
 
 
+def collate_fn(batch):
+    return tuple(zip(*batch))
+
+
 def evaluate_yolo_model_unified(model_path: str, data_yaml: str, seed: int):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
@@ -65,7 +69,6 @@ def evaluate_yolo_model_unified(model_path: str, data_yaml: str, seed: int):
 
     dataset_test = YOLOSegDataset(data_yaml, split='test')
 
-    def collate_fn(batch): return tuple(zip(*batch))
     data_loader = torch.utils.data.DataLoader(
         dataset_test, batch_size=4, shuffle=False, num_workers=4, collate_fn=collate_fn
     )
@@ -153,7 +156,6 @@ def evaluate_maskrcnn_model_unified(model_path: str, data_yaml: str, seed: int, 
 
     dataset_test = YOLOSegDataset(data_yaml, split='test')
 
-    def collate_fn(batch): return tuple(zip(*batch))
     data_loader = torch.utils.data.DataLoader(
         dataset_test, batch_size=1, shuffle=False, num_workers=4, collate_fn=collate_fn
     )
