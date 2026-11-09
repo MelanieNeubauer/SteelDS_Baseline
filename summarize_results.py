@@ -25,6 +25,9 @@ def summarize_results(dataset, path):
         try:
             df = pd.read_csv(file_path)
 
+            # expect 5 seeds
+            assert df.shape[0] == 5
+
             # Extract the model name from the parent folder name
             # (since each model is stored in its own folder)
             model_name = os.path.basename(os.path.dirname(file_path))
